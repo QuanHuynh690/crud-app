@@ -64,10 +64,13 @@ router.get("/user/:id", (req, res) => {
 //edit user
 router.put("/user/:id", upload, async (req, res) => {
   let id = req.params.id;
-  let newImage = "";
-  if (req.file) {
-    newImage = req.file.filename;
-  }
+  // let newImage = "";
+  // if (req.file) {
+  //   newImage = req.file.filename;
+  //   try {
+  //     fs.unlinkSync(req.file.fileName)
+  //   }
+  // }
   const updatedData = req.body;
   User.findByIdAndUpdate(id, updatedData, { new: true })
     .then((updatedUser) => {
@@ -80,21 +83,17 @@ router.put("/user/:id", upload, async (req, res) => {
     .catch((err) => {
       res.status(500).json({ message: err.message });
     });
-  //   try {
-  //     const user = new User({
-  //       name: req.body.name,
-  //       email: req.body.email,
-  //       phone: req.body.phone,
-  //       image: req.file.filename,
-  //     });
-  //     await user.save();
-  //     req.session.message = {
-  //       type: "success",
-  //       message: "User edited successfully",
-  //     };
-  //     res.json({ message: "User edited successfully", type: "success" });
-  //   } catch (err) {
-  //     res.json({ message: err.message, type: "danger" });
-  //   }
 });
+
+//delete user
+// router.del("/user/:id", (req, res) => {
+//   let id = req.params.id;
+//   User.findById(id)
+//     .then((user) => {
+//       res.json({ user: user });
+//     })
+//     .catch((err) => {
+//       res.json({ message: err.message });
+//     });
+// });
 module.exports = router;
