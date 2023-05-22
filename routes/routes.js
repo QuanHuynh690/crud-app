@@ -21,9 +21,18 @@ let upload = multer({
 router.post("/user", upload, async (req, res) => {
   try {
     const user = new User({
-      name: req.body.name,
+      fullName: req.body.fullName,
       email: req.body.email,
       phone: req.body.phone,
+      title: req.body.title,
+      study: req.body.study,
+      work: req.body.work,
+      description: req.body.description,
+      socialMedia: {
+        facebook: req.body.facebook,
+        twitter: req.body.twitter,
+        youtube: req.body.youtube,
+      },
       image: req.file.filename,
     });
     await user.save();
@@ -42,7 +51,7 @@ router.get("/user", (req, res) => {
   User.find()
     .exec()
     .then((users) => {
-      res.json({ users: users });
+      res.json({ data: users });
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });
